@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kalavurse – Creative Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo21.png">
+    <style>
+        /*
+          ** Custom Properties & General Styles (Nyayverse Palette) **
+        */
+        :root {
+            --primary: #121212;
+            --primary-dark: #0a0a0a;
+            --secondary: #121212;
+            --light-bg: #1e1e1e;
+            --dark-bg: #0a0a0a;
+            --text-light: #E0E0E0;
+            --text-muted: #B0B0B0;
+            --text-dark: #0a0a0a;
+            --card-bg: #1e1e1e;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            --card-hover-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
+            --accent: #f9a825;
+            --border-color: #444444;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .nepali-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Nyayverse Button Styles */
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        
+        .btn-outline-dark {
+            border-color: var(--accent);
+            color: var(--accent);
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--accent);
+            color: var(--text-dark);
+            border-color: var(--accent);
+        }
+        
+        /*
+          ** Starfield and Shooting Star Animations (Dark Theme) **
+        */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('back.jpg') no-repeat center center/cover;
+            color: var(--text-light);
+            padding: 120px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .hero-star {
+            position: absolute;
+            background-color: var(--text-light);
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out;
+            z-index: 1;
+        }
+        
+        .hero-star.small {
+            width: 1px;
+            height: 1px;
+        }
+        
+        .hero-star.medium {
+            width: 2px;
+            height: 2px;
+        }
+        
+        .hero-star.large {
+            width: 3px;
+            height: 3px;
+        }
+        
+        .shooting-star {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7));
+            transform: rotate(-45deg);
+            animation: shoot 8s linear infinite;
+            z-index: 1;
+            opacity: 0;
+        }
+    
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes shoot {
+            0% { top: -100px; left: 50%; opacity: 0; }
+            1% { opacity: 1; }
+            5% { opacity: 0; }
+            100% { top: 120%; left: -20%; }
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: var(--text-light);
+        }
+    
+        .navbar-brand img {
+            height: 40px;
+            width: 40px;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+    
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+    
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+    
+        .nav-link:hover {
+            color: var(--accent);
+        }
+    
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+    
+        .hero .lead {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .section {
+            padding: 80px 20px;
+        }
+        
+        .section-bg-white {
+            background-color: var(--light-bg);
+        }
+        .section-bg-light {
+            background-color: var(--card-bg);
+        }
+    
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+    
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        /* Services Card */
+        .services-card, .artist-card, .testimonial-card {
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            background: var(--card-bg);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: all 0.4s ease;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 350px; /* Uniform height */
+        }
+        
+        .services-card:hover, .artist-card:hover, .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-hover-shadow);
+        }
+    
+        .services-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .services-card h5 {
+            color: var(--text-light);
+        }
+        
+        .services-card p {
+            color: var(--text-muted);
+        }
+    
+        /* Artist Card */
+        .artist-card {
+            min-height: 400px; /* Uniform height */
+        }
+        .artist-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+        
+        .artist-card:hover .artist-img {
+            transform: scale(1.05);
+        }
+    
+        .artist-card h5 {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+    
+        .artist-card .specialty {
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .artist-card p {
+            color: var(--text-muted);
+        }
+        
+        /* Testimonial Card */
+        .testimonial-card {
+            text-align: left;
+        }
+        
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        .testimonial-card h6 {
+            color: var(--text-light);
+        }
+    
+        .testimonial-card small {
+            color: var(--text-muted) !important;
+        }
+
+        .testimonial-card p {
+            color: var(--text-muted);
+        }
+    
+        /* Updated Accordion Styles */
+        .accordion-item {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: var(--card-shadow);
+        }
+
+        .accordion-button {
+            background: var(--card-bg);
+            color: var(--text-light);
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            border-bottom: 0 !important;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: var(--accent) !important;
+            color: var(--text-dark) !important;
+            border-color: var(--accent) !important;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230a0a0a'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+            transform: rotate(180deg);
+        }
+
+        .accordion-button::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23E0E0E0'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            transition: transform 0.2s ease-in-out;
+        }
+    
+        .accordion-body {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+    
+        /* Form Styling */
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-weight: 300;
+            transition: all 0.3s ease;
+            background-color: var(--light-bg);
+            color: var(--text-light);
+        }
+    
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.25rem rgba(249, 168, 37, 0.2);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Artist Navigation */
+        .artist-nav-btn {
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            padding: 8px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .artist-nav-btn:hover, .artist-nav-btn.active {
+            background: var(--accent);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent);
+        }
+    
+        .artist-section {
+            display: none;
+        }
+    
+        .artist-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .artist-section .row {
+            margin-top: 30px;
+        }
+    
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,20 Q80,50 50,80 Q20,50 50,20 Z" fill="none" stroke="%23f9a825" stroke-width="2" opacity="0.1"/></svg>') repeat;
+            background-size: 150px 150px;
+            opacity: 0.2;
+        }
+
+        footer > * {
+            position: relative;
+            z-index: 1;
+        }
+    
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+    
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+    
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+    
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 767px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 60px 15px;
+            }
+        }
+        
+        /* Specific Styles to KEEP from Kalavurse */
+        /* This section maintains the unique look of the "How to Book an Artist" section from Kalavurse */
+        #how-to-book {
+            background: #1a1a1a;
+        }
+        #how-to-book .text-muted,
+        #how-to-book li,
+        #how-to-book p,
+        #how-to-book strong.text-light {
+            color: #f5f5f5 !important;
+        }
+        #how-to-book .text-primary {
+            color: #ff9e00 !important;
+        }
+        
+        .btn-outline-light {
+            border-color: var(--text-light);
+            color: var(--text-light);
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background: #ff9e00;
+            color: var(--text-light);
+            border-color: #ff9e00;
+        }
+        
+        /* Overrides to ensure text visibility */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+        #artists .text-muted,
+        #services .text-muted,
+        #art-services .text-muted {
+            color: var(--text-light) !important;
+        }
+        
+        /* Override specific Nyayverse styles that would conflict with the preserved section */
+        .section-bg-light, .bg-light {
+            background-color: var(--card-bg) !important;
+        }
+        .text-primary {
+            color: var(--accent) !important;
+        }
+        
+        .testimonial-card .text-warning i {
+            color: var(--accent) !important;
+        }
+        
+        /* Styles from Kalavurse to re-add */
+        .wave-divider {
+            position: relative;
+            height: 50px;
+            overflow: hidden;
+            margin: 40px 0;
+        }
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .piano {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            height: 200px;
+        }
+
+        .key {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .key.white {
+            width: 60px;
+            height: 200px;
+            background: white;
+            border: 1px solid black;
+            z-index: 1;
+        }
+
+        .key.black {
+            position: relative;
+            width: 40px;
+            height: 120px;
+            background: black;
+            margin-left: -20px;
+            margin-right: -20px;
+            z-index: 2;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .key.white:active {
+            background: #ddd;
+        }
+
+        .key.black:active {
+            background: #333;
+        }
+        
+        .art-services-section {
+            display: none;
+            margin-top: 20px;
+        }
+        .art-services-section.active {
+            display: block;
+        }
+        .art-services-section .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .art-services-section .col-md-12 {
+            flex: 1 1 100%;
+        }
+        .services-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        #artist-starfield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        #artists > *:not(#artist-starfield) {
+            position: relative;
+            z-index: 1;
+        }
+        #paint-splash-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .splash-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.8s ease-out;
+        }
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+        }
+        .artist-card-section {
+            display: none;
+        }
+        .artist-card-section.active {
+            display: block;
+        }
+        
+        .footer-logo {
+            height: 20px;
+            width: 20px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="logo21.png" alt="Kalavurse Logo" class="navbar-logo me-2">
+            Kalavurse
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how-to-book">How to Book</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#artists">Our Artists</a></li>
+                <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero text-center" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('back.jpg') no-repeat center center/cover;">
+    <div class="hero-star small" style="top: 20%; left: 15%; animation-delay: 1.5s;"></div>
+    <div class="hero-star large" style="top: 40%; left: 80%; animation-delay: 0.8s;"></div>
+    <div class="hero-star medium" style="top: 70%; left: 30%; animation-delay: 2.2s;"></div>
+    <div class="hero-star small" style="top: 10%; left: 55%; animation-delay: 3s;"></div>
+    <div class="hero-star large" style="top: 90%; left: 70%; animation-delay: 0.5s;"></div>
+    <div class="hero-star medium" style="top: 55%; left: 5%; animation-delay: 1.2s;"></div>
+    <div class="hero-star small" style="top: 85%; left: 20%; animation-delay: 2.7s;"></div>
+    <div class="hero-star large" style="top: 30%; left: 40%; animation-delay: 0.2s;"></div>
+    <div class="hero-star medium" style="top: 65%; left: 95%; animation-delay: 1.8s;"></div>
+    <div class="hero-content container position-relative">
+        <h1>Your Creative Hub <span class="nepali-font">(तपाईंको रचनात्मक केन्द्र)</span></h1>
+        <p class="lead">Connecting you with Nepal's top creative professionals for all your artistic needs</p>
+        <a href="#artists" class="btn btn-primary btn-lg mt-3 me-2">
+            <i class="fas fa-search me-2"></i>Find an Artist
+        </a>
+        <a href="#contact" class="btn btn-primary btn-lg mt-3 me-2">
+            <i class="fas fa-calendar-check me-2"></i>Book a Service
+        </a>
+    </div>
+</section>
+
+<section id="about" class="section section-bg-light">
+    <div class="container">
+        <h2 class="text-center section-title">About Kalavurse <span class="nepali-font">(हाम्रो बारेमा)</span></h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="lead">
+                    Welcome to <strong class="text-primary">Kalavurse</strong> — a creative hub connecting you with top artists and professionals in Nepal for all your artistic and creative needs. Whether you need a music composer, scriptwriter, or a visual artist, our platform is designed to make your creative journey seamless.
+                </p>
+                <p>If you have any complaints or queries, or you want to be a part of our website, please feel free to email us at kalavurse@gmail.com. We would love to hear from you.</p>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-check-circle me-3 text-primary"></i>
+                    <span>10+ Expert Artists</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-check-circle me-3 text-primary"></i>
+                    <span>10+ Creative Specializations</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3 text-primary"></i>
+                    <span>Quality Guaranteed</span>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="art.jpg" alt="Creative Services" class="img-fluid rounded-3 shadow-lg" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="how-to-book" class="section bg-dark">
+    <div class="container">
+        <h2 class="text-center section-title">How to Book an Artist <span class="nepali-font">(कसरी कलाकार बुक गर्ने)</span></h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="text-primary">How to Book an Artist on Our Website</h3>
+                <p class="text-muted"><strong>Book now. Pay only when you collaborate.</strong></p>
+                <p class="text-muted">Whether you need a music composer, scriptwriter, cinematographer, or studio for recording, booking a creative professional through our website is quick and easy. Follow these steps to get started:</p>
+                <ol class="text-muted">
+                    <li class="mb-3"><strong class="text-light">Select the Type of Service You Need</strong><br>
+                        Choose the category of creative help you require, such as Music Composition, Script Writing, Cinematography, Music Video Direction, Voiceover Services, Studio Recording, or Studio Booking.</li>
+                    <li class="mb-3"><strong class="text-light">Click "Hire Now"</strong><br>
+                        Find and click the "Hire Now" button to begin the booking process.</li>
+                    <li class="mb-3"><strong class="text-light">Enter Your Details</strong><br>
+                        Provide your full name, email address, and contact number in the form.</li>
+                    <li class="mb-3"><strong class="text-light">Choose Your Preferred Artist or Service</strong><br>
+                        - Select a specific artist or choose "No preference" if you're open to any available artist.</li>
+                    <li class="mb-3"><strong class="text-light">Write a Specific Message</strong><br>
+                        Briefly explain your creative needs (e.g., "I need a voiceover for my advertisement" or "I want to book a studio for song recording").</li>
+                    <li class="mb-3"><strong class="text-light">Submit Your Request</strong><br>
+                        Click the "Send Request" button to submit your booking. This step is completely free!</li>
+                </ol>
+                <h4 class="text-primary mt-4">What Happens Next?</h4>
+                <ul class="text-muted">
+                    <li class="mb-2">Our team will contact you using the phone number you provided.</li>
+                    <li>They'll discuss your needs and confirm the details of your collaboration.</li>
+                </ul>
+                <p class="text-muted mt-3"><strong>That's it! Book your creative service today and bring your vision to life with ease.</strong></p>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-lg">
+                    <iframe src="https://www.youtube.com/embed/Qz0SiMwJh-k" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="section section-bg-light">
+    <div class="container">
+        <h2 class="text-center section-title">Our Services <span class="nepali-font">(हाम्रा सेवाहरू)</span></h2>
+        <p class="text-center text-light mb-5">Discover the creative services we offer to bring your vision to life</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-music"></i>
+                    <h5>Music Composition</h5>
+                    <p>Original music for films, advertisements, or personal projects, including Nepali folk and modern genres.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-pen-fancy"></i>
+                    <h5>Script Writing</h5>
+                    <p>Scripts for films, TV serials, advertisements, or short-form content like TikTok.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-video"></i>
+                    <h5>Cinematography</h5>
+                    <p>Professional filming for movies, music videos, documentaries, and commercials.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-microphone"></i>
+                    <h5>Voiceover Services</h5>
+                    <p>Voiceovers for advertisements, animations, audiobooks, and corporate videos.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-drum"></i>
+                    <h5>Instrumentalists</h5>
+                    <p>Traditional Nepali instruments like flute, tabla, and sarangi for live or recorded performances.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-edit"></i>
+                    <h5>Lyric Writing</h5>
+                    <p>Custom lyrics for songs, jingles, or cultural performances in various languages.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-camera"></i>
+                    <h5>Music Video Direction</h5>
+                    <p>Directing and producing visually stunning music videos tailored to your vision.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-film"></i>
+                    <h5>Video Services</h5>
+                    <p>Editing, color grading, and post-production for films, ads, and social media content.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-microphone-alt"></i>
+                    <h5>Studio Recording Services</h5>
+                    <p>Professional recording sessions for songs, voiceovers, or podcasts in top studios.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="services-card">
+                    <i class="fas fa-building"></i>
+                    <h5>Studio Booking</h5>
+                    <p>Book state-of-the-art studios for song recording, rehearsals, or creative projects.</p>
+                    <a href="#contact" class="btn btn-sm btn-outline-dark">Hire Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="wave-divider">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f9a825"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f9a825"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f9a825"></path>
+    </svg>
+</div>
+
+<section id="artists" class="section section-bg-light position-relative">
+    <canvas id="artist-starfield"></canvas>
+    <div class="container">
+        <h2 class="text-center section-title">Our Creative Experts <span class="nepali-font">(हाम्रा रचनात्मक विशेषज्ञहरू)</span></h2>
+        <div id="piano" class="piano">
+            <div class="key white" data-sound="sa"></div>
+            <div class="key black" data-sound="re"></div>
+            <div class="key white" data-sound="ga"></div>
+            <div class="key black" data-sound="ma"></div>
+            <div class="key white" data-sound="pa"></div>
+            <div class="key black" data-sound="dha"></div>
+            <div class="key white" data-sound="ni"></div>
+            <div class="key black" data-sound="sha"></div>
+            <div class="key white" data-sound="sa2"></div>
+        </div>
+
+        <p class="text-center text-light mb-5">Connect with Nepal's top creative professionals specialized in various fields</p>
+        <div class="artist-nav d-flex justify-content-center flex-wrap mb-4">
+            <button class="artist-nav-btn active" data-category="all">All Artists</button>
+            <button class="artist-nav-btn" data-category="music">Music Composition</button>
+            <button class="artist-nav-btn" data-category="script">Script Writing</button>
+            <button class="artist-nav-btn" data-category="cinematography">Cinematography</button>
+            <button class="artist-nav-btn" data-category="voiceover">Voiceover</button>
+            <button class="artist-nav-btn" data-category="video">Video Services</button>
+        </div>
+        
+        <div class="artist-section active" id="all-artists">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3" data-categories="music,script,voiceover">
+                    <div class="artist-card">
+                        <img src="aunty.jpg" alt="Mandira Dhungel" class="artist-img">
+                        <h5>Mandira Dhungel</h5>
+                        <p class="specialty">Creative Head</p>
+                        <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
+                        <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                    </div>
+                    <div class="art-services-section" id="mandira-services">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="services-card">
+                                    <i class="fas fa-music"></i>
+                                    <h5>Music Composition</h5>
+                                    <p>Original music for films, advertisements, or personal projects, including Nepali folk and modern genres.</p>
+                                    <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Mandira Dhungel">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="services-card">
+                                    <i class="fas fa-pen-fancy"></i>
+                                    <h5>Script Writing</h5>
+                                    <p>Scripts for films, TV serials, advertisements, or short-form content like TikTok.</p>
+                                    <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Mandira Dhungel">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="services-card">
+                                    <i class="fas fa-microphone"></i>
+                                    <h5>Voiceover Services</h5>
+                                    <p>Voiceovers for advertisements, animations, audiobooks, and corporate videos.</p>
+                                    <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Mandira Dhungel">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="services-card">
+                                    <i class="fas fa-edit"></i>
+                                    <h5>Lyric Writing</h5>
+                                    <p>Custom lyrics for songs, jingles, or cultural performances in various languages.</p>
+                                    <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Mandira Dhungel">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="services-card">
+                                    <i class="fas fa-headphones"></i>
+                                    <h5>Music Production</h5>
+                                    <p>Professional music production and arrangement for modern and traditional music.</p>
+                                    <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Mandira Dhungel">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3" data-categories="voiceover">
+                    <div class="artist-card">
+                        <img src="shas.jpg" alt="Shashanka Ghimire" class="artist-img">
+                        <h5>Shashanka Ghimire</h5>
+                        <p class="specialty">Voiceover Artist</p>
+                        <p>3 years of experience providing voiceovers for YouTube videos.</p>
+                        <button class="btn btn-outline-dark btn-sm book-btn" data-artist="Shashanka Ghimire">Book Now</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3" data-categories="video">
+                    <div class="artist-card">
+                        <img src="https://ui-avatars.com/api/?name=Sampanna+Khanal&background=2563eb&color=fff" alt="Sampanna Khanal" class="artist-img">
+                        <h5>Sampanna Khanal</h5>
+                        <p class="specialty">Video Editor</p>
+                        <p>Experienced YouTube Vlogger and video editor specializing in engaging content.</p>
+                        <button class="btn btn-outline-dark btn-sm book-btn" data-artist="Sampanna Khanal">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="artist-section" id="music-artists">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="artist-card">
+                        <img src="aunty.jpg" alt="Mandira Dhungel" class="artist-img">
+                        <h5>Mandira Dhungel</h5>
+                        <p class="specialty">Creative Head</p>
+                        <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
+                        <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="artist-section" id="script-artists">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="artist-card">
+                        <img src="aunty.jpg" alt="Mandira Dhungel" class="artist-img">
+                        <h5>Mandira Dhungel</h5>
+                        <p class="specialty">Creative Head</p>
+                        <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
+                        <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="artist-section" id="cinematography-artists">
+            <div class="row g-4">
+                </div>
+        </div>
+        
+        <div class="artist-section" id="voiceover-artists">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="artist-card">
+                        <img src="aunty.jpg" alt="Mandira Dhungel" class="artist-img">
+                        <h5>Mandira Dhungel</h5>
+                        <p class="specialty">Creative Head</p>
+                        <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
+                        <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="artist-card">
+                        <img src="shas.jpg" alt="Shashanka Ghimire" class="artist-img">
+                        <h5>Shashanka Ghimire</h5>
+                        <p class="specialty">Voiceover Artist</p>
+                        <p>3 years of experience providing voiceovers for YouTube videos.</p>
+                        <button class="btn btn-outline-dark btn-sm book-btn" data-artist="Shashanka Ghimire">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="artist-section" id="video-artists">
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="artist-card">
+                        <img src="https://ui-avatars.com/api/?name=Sampanna+Khanal&background=2563eb&color=fff" alt="Sampanna Khanal" class="artist-img">
+                        <h5>Sampanna Khanal</h5>
+                        <p class="specialty">Video Editor</p>
+                        <p>Experienced YouTube Vlogger and video editor specializing in engaging content.</p>
+                        <button class="btn btn-outline-dark btn-sm book-btn" data-artist="Sampanna Khanal">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#contact" class="btn btn-primary">Can't Find a Specific Artist? Consult Now</a>
+        </div>
+    </div>
+</section>
+
+<section id="art-services" class="section section-bg-light position-relative">
+    <div id="paint-splash-container" style="z-index: 0; position: absolute; top:0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
+        <img src="splash1.png" class="splash-img">
+        <img src="splash2.png" class="splash-img">
+        <img src="splash3.png" class="splash-img">
+    </div>
+
+    <div class="container" style="position:relative; z-index: 1;">
+        <h2 class="text-center section-title">Our Art Services <span class="nepali-font">(हाम्रा कला सेवाहरू)</span></h2>
+        <p class="text-center text-light mb-5">Discover the vibrant art creations by our talented artists</p>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4 col-lg-3">
+                <div class="artist-card">
+                    <img src="https://ui-avatars.com/api/?name=Aditi+Jha&background=9333ea&color=fff" alt="Aditi Jha" class="artist-img">
+                    <h5>Aditi Jha</h5>
+                    <p class="specialty">Visual Artist</p>
+                    <p>Specialized in Acrylic, Watercolor, and Digital Art creations.</p>
+                    <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="aditi-services">View Services</button>
+                </div>
+                <div class="art-services-section" id="aditi-services">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="image1.jpg" alt="Acrylic Painting" class="img-fluid">
+                                <h5>Acrylic Painting</h5>
+                                <p>Vivid and expressive acrylic artworks for personal or commercial projects.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Aditi Jha">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="image2.jpg" alt="Watercolor Painting" class="img-fluid">
+                                <h5>Watercolor Painting</h5>
+                                <p>Delicate and vibrant watercolor pieces inspired by Nepali culture and nature.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Aditi Jha">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="image3.jpg" alt="Digital Art" class="img-fluid">
+                                <h5>Digital Art</h5>
+                                <p>Modern digital illustrations for branding, media, and personal use.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Aditi Jha">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <div class="artist-card">
+                    <img src="https://ui-avatars.com/api/?name=Neelanjana+Phuyal&background=10b981&color=fff" alt="Neelanjana Phuyal" class="artist-img">
+                    <h5>Neelanjana Phuyal</h5>
+                    <p class="specialty">Visual Artist</p>
+                    <p>Expert in Oil Painting, Mixed Media, Sketch, Oil Pastel, and Digital Art artworks.</p>
+                    <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="neelanjana-services">View Services</button>
+                </div>
+                <div class="art-services-section" id="neelanjana-services">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="g1.jpeg" alt="Oil Painting" class="img-fluid">
+                                <h5>Oil Painting</h5>
+                                <p>Rich and textured oil paintings for galleries or personal collections.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Neelanjana Phuyal">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="g2.jpeg" alt="Mixed Media" class="img-fluid">
+                                <h5>Mixed Media</h5>
+                                <p>Innovative artworks combining various materials and techniques.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Neelanjana Phuyal">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="g6.jpg" alt="Sketch" class="img-fluid">
+                                <h5>Sketch</h5>
+                                <p>Detailed and expressive sketches for various artistic projects.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Neelanjana Phuyal">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="g4.jpeg" alt="Oil Pastel" class="img-fluid">
+                                <h5>Oil Pastel</h5>
+                                <p>Vibrant and textured oil pastel artworks for personal or commercial use.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Neelanjana Phuyal">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <img src="g5.jpg" alt="Digital Art" class="img-fluid">
+                                <h5>Digital Art</h5>
+                                <p>Modern digital illustrations for branding, media, and personal use.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Neelanjana Phuyal">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="classes" class="section section-bg-light">
+    <div class="container">
+        <h2 class="text-center section-title">Our Schools & Institutes <span class="nepali-font">(हाम्रा विद्यालय र संस्थानहरू)</span></h2>
+        <p class="text-center text-light mb-5">Ignite your passion and learn from the best with our specialized classes</p>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4 col-lg-3">
+                <div class="artist-card">
+                    <img src="naad.jpg" alt="Naad Sangeet Pathshala" class="artist-img">
+                    <h5>Naad Sangeet Pathshala</h5>
+                    <p class="specialty">Music & Art School</p>
+                    <p>Nurturing the next generation of musicians and artists with expert instruction in various instruments.</p>
+                    <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="naad-classes">View Classes</button>
+                </div>
+                <div class="art-services-section" id="naad-classes">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-drum"></i>
+                                <h5>Tabla Class</h5>
+                                <p>Learn the rhythmic intricacies of the tabla from experienced instructors.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Tabla Class">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-violin"></i>
+                                <h5>Violin Class</h5>
+                                <p>Explore the beautiful sound of the violin with personalized lessons.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Violin Class">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-flute"></i>
+                                <h5>Flute Class</h5>
+                                <p>Learn to play the flute and create enchanting melodies.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Flute Class">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-microphone-alt"></i>
+                                <h5>Vocal Class</h5>
+                                <p>Develop your singing technique, range, and stage presence with expert guidance.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Vocal Class">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-keyboard"></i>
+                                <h5>Harmonium Class</h5>
+                                <p>Learn to play the harmonium for classical and folk music.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Harmonium Class">Book Now</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="services-card">
+                                <i class="fas fa-shoe-prints"></i>
+                                <h5>Dance Class</h5>
+                                <p>Express yourself through movement with our dance lessons, including traditional and modern styles.</p>
+                                <button class="btn btn-sm btn-outline-dark book-btn" data-artist="Naad Sangeet Pathshala" data-service="Dance Class">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="faq" class="section section-bg-light">
+    <div class="container">
+        <h2 class="text-center section-title">Frequently Asked Questions <span class="nepali-font">(प्राय सोधिने प्रश्नहरू)</span></h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I book a creative professional?
+                            </button>
+                        </h3>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can book a creative professional by filling out the contact form below, selecting the artist or service you want to collaborate with, and providing your preferred time and date. Our team will confirm your appointment via email or phone.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How are service fees determined?
+                            </button>
+                        </h3>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Service fees depend on the artist's experience and the complexity of your project. You'll receive a detailed quote when booking your appointment.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Can I get creative services remotely?
+                            </button>
+                        </h3>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, we offer remote services for script writing, voiceovers, music composition, and video editing. You can collaborate with our artists online and share files securely through our platform.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                How do you ensure the quality of creative work?
+                            </button>
+                        </h3>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We work with vetted professionals with proven track records. All deliverables are reviewed to ensure they meet your project requirements before final delivery.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="text-center section-title">Contact Us <span class="nepali-font">(हामीलाई सम्पर्क गर्नुहोस्)</span></h2>
+        <div class="row g-5">
+            <div class="col-md-5 mb-4 mb-md-0">
+                <h5>Get in Touch</h5>
+                <p>Have questions or need creative assistance? Reach out to us through any of these channels:</p>
+                <div class="mb-3">
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                    <span>Kathmandu, Nepal</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-phone me-2 text-primary"></i>
+                    <span>+977-9869153208</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-envelope me-2 text-primary"></i>
+                    <span>kalavurse@gmail.com</span>
+                </div>
+                <div class="mb-3">
+                    <i class="fas fa-clock me-2 text-primary"></i>
+                    <span>Sunday-Friday: 9:00 AM - 5:00 PM</span>
+                </div>
+                <div class="social-icons mt-4">
+                    <a href="#"><i class="fab fa-facebook-f text-primary"></i></a>
+                    <a href="#"><i class="fab fa-twitter text-primary"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in text-primary"></i></a>
+                    <a href="#"><i class="fab fa-instagram text-primary"></i></a>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <form id="consultationForm" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="89a7f5eb-d083-472b-9c33-5f2cd2d7b88a">
+                    <input type="hidden" name="subject" value="New Service Request from Kalavurse">
+                    <input type="hidden" name="from_name" value="Kalavurse">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" required />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number *</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="service" class="form-label">Service Needed *</label>
+                        <select class="form-select" id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="Music Composition">Music Composition</option>
+                            <option value="Script Writing">Script Writing</option>
+                            <option value="Cinematography">Cinematography</option>
+                            <option value="Voiceover Services">Voiceover Services</option>
+                            <option value="Instrumentalists">Instrumentalists</option>
+                            <option value="Lyric Writing">Lyric Writing</option>
+                            <option value="Music Video Direction">Music Video Direction</option>
+                            <option value="Video Services">Video Services</option>
+                            <option value="Studio Recording Services">Studio Recording Services</option>
+                            <option value="Studio Booking">Studio Booking</option>
+                            <option value="Acrylic Painting">Acrylic Painting</option>
+                            <option value="Watercolor Painting">Watercolor Painting</option>
+                            <option value="Digital Art">Digital Art</option>
+                            <option value="Oil Painting">Oil Painting</option>
+                            <option value="Mixed Media">Mixed Media</option>
+                            <option value="Charcoal Sketches">Charcoal Sketches</option>
+                            <option value="Digital Illustrations">Digital Illustrations</option>
+                            <option value="Music Production">Music Production</option>
+                            <option value="Sketch">Sketch</option>
+                            <option value="Oil Pastel">Oil Pastel</option>
+                            <option value="Tabla Class">Tabla Class</option>
+                            <option value="Violin Class">Violin Class</option>
+                            <option value="Flute Class">Flute Class</option>
+                            <option value="Vocal Class">Vocal Class</option>
+                            <option value="Harmonium Class">Harmonium Class</option>
+                            <option value="Dance Class">Dance Class</option>
+                            <option value="Other">Other Creative Service</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="artist" class="form-label">Preferred Artist/School (Optional)</label>
+                        <select class="form-select" id="artist" name="artist">
+                            <option value="">No preference</option>
+                            <option value="Mandira Dhungel">Mandira Dhungel - Creative Head</option>
+                            <option value="Shashanka Ghimire">Shashanka Ghimire - Voiceover Artist</option>
+                            <option value="Sampanna Khanal">Sampanna Khanal - Video Editor</option>
+                            <option value="Aditi Jha">Aditi Jha - Visual Artist</option>
+                            <option value="Neelanjana Phuyal">Neelanjana Phuyal - Visual Artist</option>
+                            <option value="Naad Sangeet Pathshala">Naad Sangeet Pathshala - School</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Your Message *</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="fas fa-paper-plane me-2"></i>Send Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+    <div class="d-flex">
+        <div class="toast-body">
+            <i class="fas fa-check-circle me-2"></i>
+            <span id="toastMessage">Your request has been submitted successfully!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5><img src="logo22.png" alt="Kalavurse Footer Logo" class="footer-logo">Kalavurse</h5>
+                <p>Nepal's trusted platform connecting clients with talented creative professionals.</p>
+            </div>
+            <div class="col-md-2 mb-4 mb-md-0 footer-links">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#how-to-book">How to Book</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#artists">Our Artists</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0 footer-links">
+                <h5>Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#services">Music Composition</a></li>
+                    <li><a href="#services">Script Writing</a></li>
+                    <li><a href="#services">Cinematography</a></li>
+                    <li><a href="#services">Voiceover Services</a></li>
+                    <li><a href="#services">Instrumentalists</a></li>
+                    <li><a href="#services">Music Video Direction</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 footer-links">
+                <h5>Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-map-marker-alt me-2"></i>Kathmandu</li>
+                    <li><i class="fas fa-phone me-2"></i> +977-9869153208</li>
+                    <li><i class="fas fa-envelope me-2"></i> kalavurse@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4" style="border-color: var(--border-color);">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">© 2025 Kalavurse. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <a href="#" class="text-light me-3">Privacy Policy</a>
+                <a href="#" class="text-light">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Initialize Toast
+    const toastLiveExample = document.getElementById('successToast');
+    const toastMessage = document.getElementById('toastMessage');
+    const toast = new bootstrap.Toast(toastLiveExample);
+
+    // Form Submission Handling
+    document.getElementById('consultationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+                const artistName = form.querySelector('#artist').value || 'No preference';
+                toastMessage.textContent = `Your service request${artistName !== 'No preference' ? ` with ${artistName}` : ''} has been submitted!`;
+                toast.show();
+                form.reset();
+            } else {
+                toastMessage.textContent = 'Error submitting form. Please try again.';
+                toast.show();
+            }
+        } catch (error) {
+            toastMessage.textContent = 'Error submitting form. Please try again.';
+            toast.show();
+        }
+    });
+
+    // Artist Navigation Functionality
+    const artistNavBtns = document.querySelectorAll('.artist-nav-btn');
+    const artistSections = document.querySelectorAll('.artist-section');
+    
+    artistNavBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove 'active' from all buttons and sections
+            artistNavBtns.forEach(b => b.classList.remove('active'));
+            artistSections.forEach(s => s.classList.remove('active'));
+            
+            // Add 'active' to the clicked button and corresponding section
+            this.classList.add('active');
+            const category = this.getAttribute('data-category');
+            document.getElementById(`${category}-artists`).classList.add('active');
+        });
+    });
+
+    // Book Consultation Button Functionality
+    const bookButtons = document.querySelectorAll('.book-btn');
+    const artistSelect = document.getElementById('artist');
+    const serviceSelect = document.getElementById('service');
+    
+    bookButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const artistName = this.getAttribute('data-artist');
+            const serviceName = this.getAttribute('data-service');
+            window.location.hash = '#contact';
+            
+            if (artistName) {
+                artistSelect.value = artistName;
+            }
+            
+            if (serviceName) {
+                serviceSelect.value = serviceName;
+            }
+
+            // Smooth scroll to contact section
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+    
+    const viewServicesButtons = document.querySelectorAll('.view-services-btn');
+
+    viewServicesButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const servicesSection = document.getElementById(targetId);
+
+            // Close all other services sections
+            document.querySelectorAll('.art-services-section').forEach(section => {
+                if (section !== servicesSection) {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Toggle the clicked services section
+            servicesSection.classList.toggle('active');
+        });
+    });
+
+    document.querySelectorAll('.book-btn, a[href="#contact"]').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const contactSection = document.querySelector('#contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Starfield Animation - Hero Section
+    (function() {
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let stars = Array(300).fill().map(() => ({
+            x: Math.random() * canvas.width - canvas.width / 2,
+            y: Math.random() * canvas.height - canvas.height / 2,
+            z: Math.random() * canvas.width
+        }));
+
+        function draw() {
+            ctx.fillStyle = "transparent";
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Use clearRect for transparent bg
+
+            ctx.fillStyle = "white";
+            stars.forEach(star => {
+                let k = 128.0 / star.z;
+                let px = star.x * k + canvas.width / 2;
+                let py = star.y * k + canvas.height / 2;
+
+                if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+                    let size = (1 - star.z / canvas.width) * 2;
+                    ctx.fillRect(px, py, size, size);
+                }
+
+                star.z -= 2;
+                if (star.z <= 0) {
+                    star.x = Math.random() * canvas.width - canvas.width / 2;
+                    star.y = Math.random() * canvas.height - canvas.height / 2;
+                    star.z = canvas.width;
+                }
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // Starfield Animation - Artist Section
+    (function() {
+        const canvas = document.getElementById('artist-starfield');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let stars = Array(200).fill().map(() => ({
+            x: Math.random() * canvas.width - canvas.width / 2,
+            y: Math.random() * canvas.height - canvas.height / 2,
+            z: Math.random() * canvas.width
+        }));
+
+        function draw() {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                let k = 128.0 / star.z;
+                let px = star.x * k + canvas.width / 2;
+                let py = star.y * k + canvas.height / 2;
+                if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+                    let size = (1 - star.z / canvas.width) * 2;
+                    ctx.fillRect(px, py, size, size);
+                }
+                star.z -= 2;
+                if (star.z <= 0) {
+                    star.x = Math.random() * canvas.width - canvas.width / 2;
+                    star.y = Math.random() * canvas.height - canvas.height / 2;
+                    star.z = canvas.width;
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    })();
+
+    // Piano Sound Functionality
+    const sounds = {
+        sa: 'sa.mp3',
+        re: 're.mp3',
+        ga: 'ga.mp3',
+        ma: 'ma.mp3',
+        pa: 'pa.mp3',
+        dha: 'dha.mp3',
+        ni: 'ni.mp3',
+        sha: 'sha.mp3',
+        sa2: 'sa2.mp3'
+    };
+
+    document.querySelectorAll('.key').forEach(key => {
+        key.addEventListener('click', () => {
+            const note = key.getAttribute('data-sound');
+            if (sounds[note]) {
+                const audio = new Audio(sounds[note]);
+                audio.play();
+            } else {
+                console.warn(`Sound file not found for note: ${note}`);
+            }
+        });
+    });
+
+    // Paint Splash Animation
+    const splashes = document.querySelectorAll('#paint-splash-container .splash-img');
+    function triggerPaintSplash() {
+        splashes.forEach((img, i) => {
+            setTimeout(() => {
+                img.style.transform = `translate(-50%, -50%) scale(1) rotate(${Math.random()*360}deg)`;
+                img.style.opacity = 1;
+            }, i * 150);
+        });
+    }
+
+    // Trigger when "Our Art Services" is visible
+    const splashObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                triggerPaintSplash();
+            }
+        });
+    }, { threshold: 0.5 });
+    splashObserver.observe(document.getElementById("art-services"));
+</script>
+</body>
+</html>
