@@ -1089,7 +1089,7 @@
 
 <section id="kalaai" class="section section-bg-light">
     <div class="container">
-        <h2 class="text-center section-title">KalaAI <span class="nepali-font">(कलाएआई)</span></h2>
+        <h2 class="text-center section-title">KalaAI</h2>
         <p class="text-center text-light mb-5">Compose your music with AI and bring it to life with our artists</p>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -1111,7 +1111,7 @@
                         </select>
                     </div>
                     <button id="generateMusicBtn" class="btn btn-primary w-100 py-2 mb-3">
-                        <i class="fas fa-magic me-2"></i>Generate Music
+                        <i></i>Generate Music
                     </button>
                     <p id="aiStatus" class="text-muted text-center"></p>
                     <div id="musicOutput" class="text-center" style="display: none;">
@@ -1928,7 +1928,7 @@
                             }
                             generateBtn.disabled = false;
                         } else if (taskData.status === 'PENDING' || taskData.status === 'TEXT_SUCCESS') {
-                            statusElement.innerText = "🎵 Task is in progress. Please wait...";
+                            statusElement.innerText = `🎵 Task is in progress. Status: ${taskData.status}...`;
                         } else {
                             clearInterval(interval);
                             statusElement.innerText = `❌ Music generation failed. Status: ${taskData.status}`;
