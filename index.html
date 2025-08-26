@@ -1001,7 +1001,7 @@
                 </div>
                 <div class="col-md-4 col-lg-3" data-categories="video">
                     <div class="artist-card">
-                        <img src="https://ui-avatars.com/api/?name=Sampanna+Khanal&background=2563eb&color=fff" alt="Sampanna Khanal" class="artist-img">
+                        <img src="sampa.jpeg" alt="Sampanna Khanal" class="artist-img">
                         <h5>Sampanna Khanal</h5>
                         <p class="specialty">Video Editor</p>
                         <p>Experienced YouTube Vlogger and video editor specializing in engaging content.</p>
@@ -1862,9 +1862,18 @@
 
         // Function to generate the song using the Kie.ai API
         const generateSong = async (lyrics, style) => {
-            const prompt = lyrics.trim() === '' ? `An instrumental song in ${style} style.` : lyrics;
-            const instrumentalMode = lyrics.trim() === '';
-            const model = 'V4_5';
+            let prompt = `A song in ${style} style.`;
+            let instrumentalMode = false;
+
+            if (lyrics.trim() === '') {
+                prompt = `An instrumental song in ${style} style.`;
+                instrumentalMode = true;
+            } else {
+                prompt = lyrics;
+                instrumentalMode = false;
+            }
+
+            const model = 'V4_5'; // Using a more advanced model
 
             try {
                 const response = await fetch(`${API_BASE_URL}/generate`, {
@@ -1888,19 +1897,23 @@
                     return data.data.taskId;
                 } else {
                     console.error('Request failed:', data.msg || 'Unknown error');
+                    statusElement.innerText = `❌ Request failed: ${data.msg || 'Unknown error'}`;
                     return null;
                 }
             } catch (error) {
                 console.error('Error:', error.message);
+                statusElement.innerText = `❌ Error submitting request: ${error.message}`;
                 return null;
             }
         };
 
-        // Function to poll the Kie.ai API for the song status with retry logic
+        // Function to poll the Kie.ai API for the song status with improved retry logic
         const fetchResult = async (taskId, retryCount = 0) => {
             statusElement.innerText = "🎵 Generating music... this may take a moment.";
-            const maxRetries = 5;
-            const interval = setInterval(async () => {
+            const maxRetries = 10;
+            let pollingInterval = null;
+
+            const poll = async () => {
                 try {
                     const res = await fetch(`${API_BASE_URL}/generate/record-info?taskId=${taskId}`, {
                         method: 'GET',
@@ -1915,8 +1928,8 @@
                         const taskData = data.data;
                         
                         if (taskData.status === 'SUCCESS' || taskData.status === 'FIRST_SUCCESS') {
-                            clearInterval(interval);
-                            const audioUrl = taskData.response.sunoData[0].audioUrl;
+                            clearInterval(pollingInterval);
+                            const audioUrl = taskData.response.sunoData && taskData.response.sunoData.length > 0 ? taskData.response.sunoData[0].audioUrl : null;
                             
                             if (audioUrl) {
                                 audioPlayer.src = audioUrl;
@@ -1924,46 +1937,35 @@
                                 makeRealBtn.setAttribute('data-music-link', audioUrl);
                                 statusElement.innerText = "✅ Music ready! Click play to listen.";
                             } else {
-                                statusElement.innerText = "❌ The generated song URL is not available.";
+                                statusElement.innerText = "❌ The generated song URL is not available. Try again with a different prompt.";
                             }
                             generateBtn.disabled = false;
                         } else if (taskData.status === 'PENDING' || taskData.status === 'TEXT_SUCCESS') {
                             statusElement.innerText = `🎵 Task is in progress. Status: ${taskData.status}...`;
                         } else {
-                            clearInterval(interval);
-                            statusElement.innerText = `❌ Music generation failed. Status: ${taskData.status}`;
+                            // Handle explicit failure statuses
+                            clearInterval(pollingInterval);
+                            const errorMessage = taskData.errorMessage || `Unknown failure. Status: ${taskData.status}`;
+                            statusElement.innerText = `❌ Music generation failed: ${errorMessage}`;
                             generateBtn.disabled = false;
                         }
                     } else {
-                        // Retry logic with exponential backoff
-                        if (retryCount < maxRetries) {
-                            const delay = Math.pow(2, retryCount) * 1000;
-                            console.log(`Retrying in ${delay / 1000} seconds...`);
-                            retryCount++;
-                            setTimeout(() => fetchResult(taskId, retryCount), delay);
-                            clearInterval(interval);
-                        } else {
-                            clearInterval(interval);
-                            statusElement.innerText = '❌ Failed to fetch music status after multiple retries. Please try again later.';
-                            generateBtn.disabled = false;
-                        }
-                    }
-                } catch (err) {
-                    // Handle network errors with retry logic
-                    if (retryCount < maxRetries) {
-                        const delay = Math.pow(2, retryCount) * 1000;
-                        console.error("Polling error, retrying:", err);
-                        retryCount++;
-                        setTimeout(() => fetchResult(taskId, retryCount), delay);
-                        clearInterval(interval);
-                    } else {
-                        clearInterval(interval);
-                        console.error("Polling error after max retries:", err);
-                        statusElement.innerText = "❌ An error occurred after multiple retries. The service may be unavailable.";
+                        // Handle API errors during polling
+                        clearInterval(pollingInterval);
+                        const errorMessage = data.msg || 'Unknown error fetching status.';
+                        statusElement.innerText = `❌ Failed to fetch music status: ${errorMessage}`;
                         generateBtn.disabled = false;
                     }
+                } catch (err) {
+                    // Handle network errors
+                    clearInterval(pollingInterval);
+                    console.error("Polling error:", err);
+                    statusElement.innerText = "❌ An unexpected error occurred. Please check your network and try again.";
+                    generateBtn.disabled = false;
                 }
-            }, 5000); // Poll every 5 seconds
+            };
+
+            pollingInterval = setInterval(poll, 5000); // Poll every 5 seconds
         };
 
 
