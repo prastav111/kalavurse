@@ -382,12 +382,6 @@
             transition: transform 0.2s ease-in-out;
         }
     
-        .accordion-body {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-        }
-    
         /* Form Styling */
         .form-control, .form-select {
             border-radius: 12px;
@@ -742,7 +736,7 @@
         <h1>Your Creative Hub <span class="nepali-font">(तपाईंको रचनात्मक केन्द्र)</span></h1>
         <p class="lead">Connecting you with Nepal's top creative professionals for all your artistic needs</p>
         <button class="btn btn-primary btn-lg mt-3 me-2" onclick="document.getElementById('artists').scrollIntoView({ behavior: 'smooth' });">
-        <i class="fas fa-search me-2"></i>Find an Artist
+            <i class="fas fa-search me-2"></i>Find an Artist
         </button>
         <button class="btn btn-primary btn-lg mt-3 me-2 book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal">
             <i class="fas fa-calendar-check me-2"></i>Book a Service
@@ -759,6 +753,7 @@
                     Welcome to <strong class="text-primary">Kalavurse</strong> — a creative hub connecting you with top artists and professionals in Nepal for all your artistic and creative needs. Whether you need a music composer, scriptwriter, or a visual artist, our platform is designed to make your creative journey seamless.
                 </p>
                 <p>If you have any complaints or queries, or you want to be a part of our website, please feel free to email us at kalavurse@gmail.com. We would love to hear from you.</p>
+                <p>In addition to our traditional services, we also feature **KalaAI**, an innovative tool that allows you to instantly compose music using AI. Simply input your lyrics and select a style, and our AI will generate a unique track. If you love the result, you can easily connect with our professional artists to refine, produce, and master your creation, bringing your vision to life with a human touch.</p>
                 <div class="d-flex align-items-center mb-3">
                     <i class="fas fa-check-circle me-3 text-primary"></i>
                     <span>10+ Expert Artists</span>
@@ -1092,6 +1087,45 @@
     </div>
 </section>
 
+<section id="kalaai" class="section section-bg-light">
+    <div class="container">
+        <h2 class="text-center section-title">KalaAI <span class="nepali-font">(कलाएआई)</span></h2>
+        <p class="text-center text-light mb-5">Compose your music with AI and bring it to life with our artists</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="services-card">
+                    <h5 class="mb-3">AI Music Composer</h5>
+                    <p class="text-muted">Enter your lyrics, choose a style, and let AI generate a unique music track for you.</p>
+                    <div class="mb-3">
+                        <label for="lyricsInput" class="form-label">Lyrics</label>
+                        <textarea class="form-control" id="lyricsInput" rows="4" placeholder="Type your lyrics here..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="styleSelect" class="form-label">Music Style</label>
+                        <select class="form-select" id="styleSelect">
+                            <option value="Pop">Pop</option>
+                            <option value="Rock">Rock</option>
+                            <option value="Nepali Folk">Nepali Folk</option>
+                            <option value="Instrumental">Instrumental</option>
+                            <option value="Jazz">Jazz</option>
+                        </select>
+                    </div>
+                    <button id="generateMusicBtn" class="btn btn-primary w-100 py-2 mb-3">
+                        <i class="fas fa-magic me-2"></i>Generate Music
+                    </button>
+                    <p id="aiStatus" class="text-muted text-center"></p>
+                    <div id="musicOutput" class="text-center" style="display: none;">
+                        <audio id="audioPlayer" controls class="w-100 mb-3"></audio>
+                        <p class="text-muted small">Like what you hear?</p>
+                        <button id="makeRealBtn" class="btn btn-outline-dark book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal" data-service="AI-Generated Music Collaboration" data-music-link="">
+                            <i class="fas fa-handshake me-2"></i>Want to Make This Real?
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section id="art-services" class="section section-bg-light position-relative">
     <div id="paint-splash-container" style="z-index: 0; position: absolute; top:0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none;">
         <img src="splash1.png" class="splash-img">
@@ -1447,6 +1481,7 @@
                             <option value="Vocal Class">Vocal Class</option>
                             <option value="Harmonium Class">Harmonium Class</option>
                             <option value="Dance Class">Dance Class</option>
+                            <option value="AI-Generated Music Collaboration">AI-Generated Music Collaboration</option>
                             <option value="Other">Other Creative Service</option>
                         </select>
                     </div>
@@ -1554,6 +1589,7 @@
         const button = event.relatedTarget;
         const artistName = button.getAttribute('data-artist');
         const serviceName = button.getAttribute('data-service');
+        const musicLink = button.getAttribute('data-music-link');
 
         // Reset form to default values
         bookingArtistSelect.value = '';
@@ -1566,6 +1602,9 @@
         }
         if (serviceName) {
             bookingServiceSelect.value = serviceName;
+        }
+        if (musicLink) {
+            document.getElementById('bookingMessage').value = `I would like to collaborate on this AI-generated music track: ${musicLink}`;
         }
     });
 
@@ -1804,6 +1843,152 @@
         });
     }, { threshold: 0.5 });
     splashObserver.observe(document.getElementById("art-services"));
+
+    // KalaAI Music Generation Logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const generateBtn = document.getElementById('generateMusicBtn');
+        const lyricsInput = document.getElementById('lyricsInput');
+        const styleSelect = document.getElementById('styleSelect');
+        const musicOutput = document.getElementById('musicOutput');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const makeRealBtn = document.getElementById('makeRealBtn');
+        const statusElement = document.getElementById('aiStatus');
+
+        // This API key and base URL are from Kie.ai, a third-party service for Suno AI.
+        // For a prototype, this is sufficient. For a production site, you should manage
+        // your API key on a backend server to prevent public exposure.
+        const API_KEY = "d0e2b21c41f38f09c229cb3cc47fc321";
+        const API_BASE_URL = "https://api.kie.ai/api/v1";
+
+        // Function to generate the song using the Kie.ai API
+        const generateSong = async (lyrics, style) => {
+            const prompt = lyrics.trim() === '' ? `An instrumental song in ${style} style.` : lyrics;
+            const instrumentalMode = lyrics.trim() === '';
+            const model = 'V4_5';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        customMode: false,
+                        instrumental: instrumentalMode,
+                        model: model,
+                        callBackUrl: 'https://your-app.com/callback' // Placeholder URL, not used in this frontend-only implementation
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.code === 200) {
+                    return data.data.taskId;
+                } else {
+                    console.error('Request failed:', data.msg || 'Unknown error');
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+                return null;
+            }
+        };
+
+        // Function to poll the Kie.ai API for the song status with retry logic
+        const fetchResult = async (taskId, retryCount = 0) => {
+            statusElement.innerText = "🎵 Generating music... this may take a moment.";
+            const maxRetries = 5;
+            const interval = setInterval(async () => {
+                try {
+                    const res = await fetch(`${API_BASE_URL}/generate/record-info?taskId=${taskId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`
+                        }
+                    });
+
+                    const data = await res.json();
+                    
+                    if (res.ok && data.code === 200) {
+                        const taskData = data.data;
+                        
+                        if (taskData.status === 'SUCCESS' || taskData.status === 'FIRST_SUCCESS') {
+                            clearInterval(interval);
+                            const audioUrl = taskData.response.sunoData[0].audioUrl;
+                            
+                            if (audioUrl) {
+                                audioPlayer.src = audioUrl;
+                                musicOutput.style.display = 'block';
+                                makeRealBtn.setAttribute('data-music-link', audioUrl);
+                                statusElement.innerText = "✅ Music ready! Click play to listen.";
+                            } else {
+                                statusElement.innerText = "❌ The generated song URL is not available.";
+                            }
+                            generateBtn.disabled = false;
+                        } else if (taskData.status === 'PENDING' || taskData.status === 'TEXT_SUCCESS') {
+                            statusElement.innerText = "🎵 Task is in progress. Please wait...";
+                        } else {
+                            clearInterval(interval);
+                            statusElement.innerText = `❌ Music generation failed. Status: ${taskData.status}`;
+                            generateBtn.disabled = false;
+                        }
+                    } else {
+                        // Retry logic with exponential backoff
+                        if (retryCount < maxRetries) {
+                            const delay = Math.pow(2, retryCount) * 1000;
+                            console.log(`Retrying in ${delay / 1000} seconds...`);
+                            retryCount++;
+                            setTimeout(() => fetchResult(taskId, retryCount), delay);
+                            clearInterval(interval);
+                        } else {
+                            clearInterval(interval);
+                            statusElement.innerText = '❌ Failed to fetch music status after multiple retries. Please try again later.';
+                            generateBtn.disabled = false;
+                        }
+                    }
+                } catch (err) {
+                    // Handle network errors with retry logic
+                    if (retryCount < maxRetries) {
+                        const delay = Math.pow(2, retryCount) * 1000;
+                        console.error("Polling error, retrying:", err);
+                        retryCount++;
+                        setTimeout(() => fetchResult(taskId, retryCount), delay);
+                        clearInterval(interval);
+                    } else {
+                        clearInterval(interval);
+                        console.error("Polling error after max retries:", err);
+                        statusElement.innerText = "❌ An error occurred after multiple retries. The service may be unavailable.";
+                        generateBtn.disabled = false;
+                    }
+                }
+            }, 5000); // Poll every 5 seconds
+        };
+
+
+        // Event listener for the "Generate Music" button
+        generateBtn.addEventListener('click', async () => {
+            const lyrics = lyricsInput.value;
+            const style = styleSelect.value;
+            
+            if (lyrics.trim() === '' && style.trim() === '') {
+                statusElement.innerText = "Please enter some lyrics or select a style.";
+                return;
+            }
+            
+            generateBtn.disabled = true;
+            musicOutput.style.display = 'none';
+            statusElement.innerText = "Submitting request...";
+
+            const taskId = await generateSong(lyrics, style);
+            if (taskId) {
+                fetchResult(taskId);
+            } else {
+                generateBtn.disabled = false;
+            }
+        });
+    });
 </script>
 </body>
 </html>
