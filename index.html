@@ -693,6 +693,16 @@
         .btn-close {
             filter: invert(1);
         }
+        .accordion-body {
+    color: var(--text-light) !important;
+    background-color: var(--card-bg) !important;
+    }
+    #generateMusicBtn {
+    font-size: 0.95rem;     /* smaller font than big buttons */
+    padding: 6px 18px;      /* balanced height & width */
+    border-radius: 25px;    /* rounded "cute" look */
+    font-weight: 600;       /* clean bold text */
+    }
     </style>
 </head>
 <body>
@@ -1110,9 +1120,14 @@
                             <option value="Jazz">Jazz</option>
                         </select>
                     </div>
-                    <button id="generateMusicBtn" class="btn btn-primary w-100 py-2 mb-3">
-                        <i></i>Generate Music
+                    <button id="generateMusicBtn" class="btn btn-primary px-4 py-2 mb-2">
+                    Generate Music
                     </button>
+
+
+
+
+
                     <p id="aiStatus" class="text-muted text-center"></p>
                     <div id="musicOutput" class="text-center" style="display: none;">
                         <audio id="audioPlayer" controls class="w-100 mb-3"></audio>
@@ -1315,7 +1330,7 @@
                         </h3>
                         <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                You can book a creative professional by filling out the contact form below, selecting the artist or service you want to collaborate with, and providing your preferred time and date. Our team will confirm your appointment via email or phone.
+                                You can book a creative professional by submitting a request through the "Book a Service" button at the top of the page. You'll need to provide your contact details, select the service you want, and briefly describe your project. Our team will then contact you to discuss your needs and finalize the collaboration.
                             </div>
                         </div>
                     </div>
@@ -1990,5 +2005,9 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
