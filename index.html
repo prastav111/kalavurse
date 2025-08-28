@@ -27,7 +27,7 @@
             --accent: #f9a825;
             --border-color: #444444;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--dark-bg);
@@ -63,7 +63,7 @@
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-        
+
         .btn-outline-dark {
             border-color: var(--accent);
             color: var(--accent);
@@ -77,7 +77,7 @@
             color: var(--text-dark);
             border-color: var(--accent);
         }
-        
+
         /*
           ** Starfield and Shooting Star Animations (Dark Theme) **
         */
@@ -126,7 +126,7 @@
             z-index: 1;
             opacity: 0;
         }
-    
+
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
@@ -164,7 +164,7 @@
             transform: scale(1.05);
             color: var(--text-light);
         }
-    
+
         .navbar-brand img {
             height: 40px;
             width: 40px;
@@ -179,7 +179,7 @@
             margin: 0 10px;
             transition: color 0.3s ease;
         }
-    
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -190,16 +190,16 @@
             left: 0;
             transition: width 0.3s ease;
         }
-    
+
         .nav-link:hover::after,
         .nav-link.active::after {
             width: 100%;
         }
-    
+
         .nav-link:hover {
             color: var(--accent);
         }
-    
+
         .hero-content {
             position: relative;
             z-index: 2;
@@ -210,7 +210,7 @@
             text-shadow: 0 3px 6px rgba(0,0,0,0.15);
             margin-bottom: 20px;
         }
-    
+
         .hero .lead {
             font-size: 1.2rem;
             font-weight: 300;
@@ -228,7 +228,7 @@
         .section-bg-light {
             background-color: var(--card-bg);
         }
-    
+
         .section-title {
             position: relative;
             margin-bottom: 50px;
@@ -237,7 +237,7 @@
             text-align: center;
             color: var(--text-light);
         }
-    
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -272,7 +272,7 @@
             transform: translateY(-8px);
             box-shadow: var(--card-hover-shadow);
         }
-    
+
         .services-card i {
             font-size: 2.5rem;
             color: var(--accent);
@@ -286,7 +286,7 @@
         .services-card p {
             color: var(--text-muted);
         }
-    
+
         /* Artist Card */
         .artist-card {
             min-height: 400px; /* Uniform height */
@@ -304,12 +304,12 @@
         .artist-card:hover .artist-img {
             transform: scale(1.05);
         }
-    
+
         .artist-card h5 {
             font-weight: 600;
             color: var(--text-light);
         }
-    
+
         .artist-card .specialty {
             color: var(--accent);
             font-weight: 500;
@@ -336,7 +336,7 @@
         .testimonial-card h6 {
             color: var(--text-light);
         }
-    
+
         .testimonial-card small {
             color: var(--text-muted) !important;
         }
@@ -459,24 +459,24 @@
             position: relative;
             z-index: 1;
         }
-    
+
         .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-    
+
         .footer-links a:hover {
             color: var(--accent);
         }
-    
+
         .social-icons a {
             color: var(--text-light);
             font-size: 1.2rem;
             margin-right: 15px;
             transition: transform 0.3s ease, color 0.3s ease;
         }
-    
+
         .social-icons a:hover {
             transform: scale(1.2);
             color: var(--accent);
@@ -708,6 +708,17 @@
     .navbar .navbar-brand:focus,
     .navbar .navbar-brand:active{
     color: var(--accent) !important;
+    }
+    .chat-btn {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-light);
+        transition: all 0.3s ease;
+    }
+    .chat-btn:hover {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
     }
 
     </style>
@@ -961,6 +972,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
                         <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Mandira Dhungel">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                     <div class="art-services-section" id="mandira-services">
                         <div class="row">
@@ -1014,6 +1028,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>3 years of experience providing voiceovers for YouTube videos.</p>
                         <button class="btn btn-outline-dark btn-sm book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal" data-artist="Shashanka Ghimire" data-service="Voiceover Services">Book Now</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Shashanka Ghimire">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3" data-categories="video">
@@ -1023,6 +1040,9 @@
                         <p class="specialty">Video Editor</p>
                         <p>Experienced YouTube Vlogger and video editor specializing in engaging content.</p>
                         <button class="btn btn-outline-dark btn-sm book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal" data-artist="Sampanna Khanal" data-service="Video Services">Book Now</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Sampanna Khanal">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1037,6 +1057,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
                         <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Mandira Dhungel">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1051,6 +1074,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
                         <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Mandira Dhungel">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1070,6 +1096,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>25+ years in music industry as a radio presenter, lyricist, music producer, and creative head for Music Nepal, also writes scripts for movies and ads.</p>
                         <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="mandira-services">View Services</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Mandira Dhungel">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
@@ -1079,6 +1108,9 @@
                         <p class="specialty">Voiceover Artist</p>
                         <p>3 years of experience providing voiceovers for YouTube videos.</p>
                         <button class="btn btn-outline-dark btn-sm book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal" data-artist="Shashanka Ghimire" data-service="Voiceover Services">Book Now</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Shashanka Ghimire">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1093,6 +1125,9 @@
                         <p class="specialty">Video Editor</p>
                         <p>Experienced YouTube Vlogger and video editor specializing in engaging content.</p>
                         <button class="btn btn-outline-dark btn-sm book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal" data-artist="Sampanna Khanal" data-service="Video Services">Book Now</button>
+                        <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Sampanna Khanal">
+                            <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1130,11 +1165,6 @@
                     <button id="generateMusicBtn" class="btn btn-primary px-4 py-2 mb-2">
                     Generate Music
                     </button>
-
-
-
-
-
                     <p id="aiStatus" class="text-muted text-center"></p>
                     <div id="musicOutput" class="text-center" style="display: none;">
                         <audio id="audioPlayer" controls class="w-100 mb-3"></audio>
@@ -1166,6 +1196,9 @@
                     <p class="specialty">Visual Artist</p>
                     <p>Specialized in Acrylic, Watercolor, and Digital Art creations.</p>
                     <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="aditi-services">View Services</button>
+                    <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Aditi Jha">
+                        <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                    </button>
                 </div>
                 <div class="art-services-section" id="aditi-services">
                     <div class="row">
@@ -1203,6 +1236,9 @@
                     <p class="specialty">Visual Artist</p>
                     <p>Expert in Oil Painting, Mixed Media, Sketch, Oil Pastel, and Digital Art artworks.</p>
                     <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="neelanjana-services">View Services</button>
+                    <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Neelanjana Phuyal">
+                        <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                    </button>
                 </div>
                 <div class="art-services-section" id="neelanjana-services">
                     <div class="row">
@@ -1260,11 +1296,14 @@
         <div class="row justify-content-center g-4">
             <div class="col-md-4 col-lg-3">
                 <div class="artist-card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmSdLv2BzMwIq3NKYW7PtCPQPTu4lL6u0cw&s" alt="Sangeet Pathshala" class="artist-img">
-                    <h5>Sangeet Pathshala</h5>
+                    <img src="naad.jpg" alt="Naad Sangeet Pathshala" class="artist-img">
+                    <h5>Naad Sangeet Pathshala</h5>
                     <p class="specialty">Music & Art School</p>
                     <p>Nurturing the next generation of musicians and artists with expert instruction in various instruments.</p>
                     <button class="btn btn-outline-dark btn-sm view-services-btn" data-target="naad-classes">View Classes</button>
+                    <button class="btn btn-primary btn-sm chat-btn mt-2" data-bs-toggle="modal" data-bs-target="#chatModal" data-artist="Naad Sangeet Pathshala">
+                        <i class="fas fa-comment-dots me-2"></i>Chat with Artist
+                    </button>
                 </div>
                 <div class="art-services-section" id="naad-classes">
                     <div class="row">
@@ -1524,6 +1563,26 @@
                     <button type="submit" class="btn btn-primary w-100 py-2">
                         <i class="fas fa-paper-plane me-2"></i>Send Request
                     </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chatModalLabel">Chat with <span id="chatArtistName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="chatForm">
+                    <div class="mb-3">
+                        <label for="chatUserName" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="chatUserName" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Start Chat</button>
                 </form>
             </div>
         </div>
@@ -2011,6 +2070,48 @@
             }
         });
     });
+
+    // Chat Modal and Tawk.to Integration
+    const chatModal = document.getElementById('chatModal');
+    chatModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const artistName = button.getAttribute('data-artist');
+        document.getElementById('chatArtistName').textContent = artistName;
+
+        // Pause all playing audio
+        document.querySelectorAll('audio').forEach(audio => {
+            audio.pause();
+        });
+    });
+
+    document.getElementById('chatForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const userName = document.getElementById('chatUserName').value;
+        const artistName = document.getElementById('chatArtistName').textContent;
+        
+        if (typeof Tawk_API !== 'undefined') {
+            Tawk_API.setAttributes({
+                'name'  : userName,
+                'message': `Hello, I would like to chat with ${artistName} about their services.`
+            }, function(error){});
+
+            Tawk_API.popup();
+        }
+        
+        const modalInstance = bootstrap.Modal.getInstance(chatModal);
+        modalInstance.hide();
+    });
+</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68afeb9f3b2d9e1926a20713/1j3nj0qi2';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
 </body>
 </html>
