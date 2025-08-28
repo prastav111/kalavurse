@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="logo21.png">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         /*
           ** Custom Properties & General Styles (Nyayverse Palette) **
@@ -831,12 +832,7 @@
                 </ul>
                 <p class="text-muted mt-3"><strong>That's it! Book your creative service today and bring your vision to life with ease.</strong></p>
             </div>
-          <!---- <div class="col-md-6 text-center">
-                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-lg">
-                    youtube
-                </div>
-            </div>-->
-        </div>
+          </div>
     </div>
 </section>
 
@@ -1582,7 +1578,8 @@
                         <label for="chatUserName" class="form-label">Your Name</label>
                         <input type="text" class="form-control" id="chatUserName" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Start Chat</button>
+                    <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Start Chat</button>
                 </form>
             </div>
         </div>
@@ -2086,6 +2083,16 @@
 
     document.getElementById('chatForm').addEventListener('submit', function(event) {
         event.preventDefault();
+
+        // Get reCAPTCHA response
+        const recaptchaResponse = grecaptcha.getResponse();
+
+        // Check if reCAPTCHA is completed
+        if (!recaptchaResponse) {
+            alert('Please complete the reCAPTCHA verification.');
+            return; // Stop the function if not verified
+        }
+        
         const userName = document.getElementById('chatUserName').value;
         const artistName = document.getElementById('chatArtistName').textContent;
         
