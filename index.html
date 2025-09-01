@@ -1573,7 +1573,6 @@
                 <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST">
                     <input type="hidden" name="access_key" value="89a7f5eb-d083-472b-9c33-5f2cd2d7b88a">
                     <input type="hidden" name="subject" value="New Service Request from Kalavurse">
-                    <input type="hidden" name="from_name" value="Kalavurse">
                     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
                     
                     <div class="mb-3">
@@ -2180,7 +2179,7 @@
 
         if (chatKey.toUpperCase() !== correctKey) {
             keyInput.classList.add('is-invalid');
-            toastMessage.textContent = 'Incorrect key. Please try again.';
+            toastMessage.textContent = 'Incorrect key. Please check the "How to Book" section.';
             toast.show();
             return;
         }
@@ -2188,12 +2187,23 @@
         keyInput.classList.remove('is-invalid');
         
         if (typeof Tawk_API !== 'undefined') {
-            Tawk_API.setAttributes({
-                'name'  : userName,
-                'message': `Hello, I would like to chat with ${artistName} about their services.`
-            }, function(error){});
+            // Function to run when Tawk.to is ready or immediately if it already is.
+            const handleChat = function() {
+                Tawk_API.setAttributes({
+                    'name'  : userName,
+                    'message': `Hello, I would like to chat with ${artistName} about their services.`
+                }, function(error){});
 
-            Tawk_API.toggle();
+                // Toggle the chat widget on the page
+                Tawk_API.toggle();
+            };
+
+            // Check if Tawk.to is already loaded, otherwise set a callback.
+            if (Tawk_API.isTawkLoaded()) {
+                handleChat();
+            } else {
+                Tawk_API.onLoad = handleChat;
+            }
         }
         
         toastMessage.textContent = 'Key accepted. Starting chat...';
