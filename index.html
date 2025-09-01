@@ -830,13 +830,9 @@
                     <li>They'll discuss your needs and confirm the details of your collaboration.</li>
                 </ul>
                 <p class="text-muted mt-3"><strong>That's it! Book your creative service today and bring your vision to life with ease.</strong></p>
+                <p class="text-muted mt-3"><strong><strong class="text-primary">Key for chat feature is: CWAE</strong></strong></p>
             </div>
-          <!---- <div class="col-md-6 text-center">
-                <div class="ratio ratio-16x9 rounded overflow-hidden shadow-lg">
-                    youtube
-                </div>
-            </div>-->
-        </div>
+          </div>
     </div>
 </section>
 
@@ -1582,6 +1578,11 @@
                         <label for="chatUserName" class="form-label">Your Name</label>
                         <input type="text" class="form-control" id="chatUserName" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="chatKey" class="form-label">Enter Key to Chat</label>
+                        <input type="text" class="form-control" id="chatKey" required>
+                        <div class="invalid-feedback">Incorrect key. Please check the "How to Book" section.</div>
+                    </div>
                     <button type="submit" class="btn btn-primary w-100">Start Chat</button>
                 </form>
             </div>
@@ -2087,7 +2088,21 @@
     document.getElementById('chatForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const userName = document.getElementById('chatUserName').value;
+        const chatKey = document.getElementById('chatKey').value;
         const artistName = document.getElementById('chatArtistName').textContent;
+        const correctKey = "CWAE";
+
+        const keyInput = document.getElementById('chatKey');
+        const modalInstance = bootstrap.Modal.getInstance(chatModal);
+
+        if (chatKey.toUpperCase() !== correctKey) {
+            keyInput.classList.add('is-invalid');
+            toastMessage.textContent = 'Incorrect key. Please try again.';
+            toast.show();
+            return;
+        }
+
+        keyInput.classList.remove('is-invalid');
         
         if (typeof Tawk_API !== 'undefined') {
             Tawk_API.setAttributes({
@@ -2098,7 +2113,8 @@
             Tawk_API.popup();
         }
         
-        const modalInstance = bootstrap.Modal.getInstance(chatModal);
+        toastMessage.textContent = 'Key accepted. Starting chat...';
+        toast.show();
         modalInstance.hide();
     });
 </script>
