@@ -730,7 +730,21 @@
         position: relative;
         z-index: 1;
     }
+    #tawkchat-iframe-container {
+    z-index: 9999 !important;
+    }
+    @media (max-width: 767px) {
+    #art-services {
+        min-height: 500px; /* Adjust height for mobile */
+    }
 
+    .splash-img {
+        /* Reduce size of splashes on smaller screens */
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+}
     </style>
 </head>
 <body>
@@ -2196,39 +2210,46 @@
 
         keyInput.classList.remove('is-invalid');
         
-        // This is the code that works for opening the chat on the same page.
-        // It's robust enough to wait for the Tawk.to script to load.
-        const openTawkChat = function() {
+        // This is the updated, robust code to handle the Tawk.to API
+        modalInstance.hide();
+        
+        if (typeof Tawk_API !== 'undefined' && typeof Tawk_API.toggle === 'function') {
+            console.log("Tawk_API is loaded. Setting attributes and toggling chat.");
+            
+            // Set attributes for the visitor. This is crucial for pre-populating the chat.
             Tawk_API.setAttributes({
                 'name': userName,
                 'message': `Hello, I would like to chat with ${artistName} about their services.`
-            }, function(error){});
+            }, function(error) {
+                if (error) {
+                    console.error("Tawk.to setAttributes error:", error);
+                }
+            });
+            
+            // Open the chat widget.
             Tawk_API.toggle();
-        };
-
-        if (typeof Tawk_API.toggle === 'function') {
-            openTawkChat();
+            toastMessage.textContent = 'Key accepted. Starting chat...';
         } else {
-            Tawk_API.onLoad = function() {
-                openTawkChat();
-            };
+            // Fallback if the Tawk.to API is not found.
+            console.warn("Tawk_API is not available. Check your Tawk.to script and dashboard settings.");
+            toastMessage.textContent = 'Chat service is temporarily unavailable. Please email us at kalavurse@gmail.com.';
         }
         
-        toastMessage.textContent = 'Key accepted. Starting chat...';
         toast.show();
-        modalInstance.hide();
     });
 </script>
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
-s1.src='https://embed.tawk.to/68afeb9f3b2d9e1926a20713/1j44puedj';
+s1.src='https://embed.tawk.to/68afeb9f3b2d9e1926a20713/1j45kothd';
 s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
+<!--End of Tawk.to Script-->
 </body>
 </html>
